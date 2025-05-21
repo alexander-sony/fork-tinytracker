@@ -1,5 +1,6 @@
 # Some notes (alex)
-- run webcam demo simply with: make webcam. This will automatically install deps.
+- run test demo simply with: make test. This will automatically install deps and use a pre-recorded video as source.
+- run webcam demo with: make webcam. This will use the default camera (if available)
 - WebcamDemoTflite.py runs but the results are not fantastic... Gaze coordinates are pretty much in the center of the image no matter what.
 
 #  👀 TinyTracker: Gaze Estimation on Edge Devices  👀

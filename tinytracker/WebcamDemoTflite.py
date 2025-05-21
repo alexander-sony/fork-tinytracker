@@ -2,6 +2,10 @@ import tensorflow as tf
 import cv2
 import numpy as np
 
+import argparse
+
+WIDTH, HEIGHT = 1920, 1080
+
 import matplotlib.pyplot as plt
 def draw_rectangle(image_shape, rect):
     # Create a black image
@@ -139,6 +143,16 @@ def draw_cross_on_image(image):
     return image
 
 
+# Argument parser setup
+parser = argparse.ArgumentParser(description="Use webcam or video file as input.")
+parser.add_argument(
+    "--source",
+    type=str,
+    default="webcam",
+    help="Set to 'webcam' or provide path to an MP4 video file"
+)
+args = parser.parse_args()
+
 tinytracker_interpreter = tf.lite.Interpreter(model_path="models/TinyTracker.tflite")
 tinytrackerS_interpreter = tf.lite.Interpreter(model_path="models/TinyTrackerS.tflite")
 
@@ -153,18 +167,24 @@ input_shape_tinytracker = input_details[0]["shape"]
 input_shape_tinytrackerS = input_details_S[0]["shape"]
 
 
-cap = cv2.VideoCapture(0)
 
-# Check if the webcam is opened successfully
+# Determine source
+use_webcam = args.source == "webcam"
+cap = cv2.VideoCapture(0 if use_webcam else args.source)
+
 if not cap.isOpened():
-    print("Failed to open webcam")
+    print(f"Failed to open {'webcam' if use_webcam else args.source}")
     exit()
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+
+# Set resolution for webcam
+if use_webcam:
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
+
 ps = [0,0]
 
 while True:
-    # Read the current frame from the webcam
+    # Read the current frame
     ret, frame = cap.read()
     frame = cv2.flip(frame, 1)
     #frame = crop_image(frame, (800,0,720,1000))
