@@ -25,14 +25,10 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 2. Install [tensorflow](https://www.tensorflow.org/install)
-3. get [haarcascade](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml) detector for the face and store it in a new directory called "haarcascade"
-```
-mkdir haarcascade
-cd haarcascade
-wget https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml
-```
+
 4. run WebcamDemoTflite.py 
 ```
+cd tinytracker
 python WebcamDemoTflite.py 
 ```
 If everything works without errors, you can now track your gaze with your webcam and compare TinyTracker to TinyTrackerS.
