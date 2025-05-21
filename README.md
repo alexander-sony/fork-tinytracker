@@ -1,3 +1,7 @@
+# Some notes (alex)
+- run webcam demo simply with: make webcam. This will automatically install deps.
+- WebcamDemoTflite.py runs but the results are not fantastic... Gaze coordinates are pretty much in the center of the image no matter what.
+
 #  👀 TinyTracker: Gaze Estimation on Edge Devices  👀
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/tinytracker-ultra-fast-and-ultra-low-power/gaze-estimation-on-gazecapture)](https://paperswithcode.com/paper/tinytracker-ultra-fast-and-ultra-low-power)
 
