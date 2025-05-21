@@ -40,7 +40,11 @@ def create_grid(g, w, h):
     return np.meshgrid(linx, liny)
 def detect_eyes_and_face(image, static_crop = False):
     # Load the Haar cascade XML files for face and eye detection
-    face_cascade = cv2.CascadeClassifier('./haarcascade/haarcascade_frontalface_default.xml')
+    cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    face_cascade = cv2.CascadeClassifier(cascade_path)
+    # does not work: face_cascade = cv2.CascadeClassifier('haarcascade/haarcascade_frontalface_default.xml')
+    if face_cascade.empty():
+        raise Exception("Failed to load the cascade classifier.")
 
     # Read the image using OpenCV
 
@@ -174,9 +178,11 @@ while True:
     try:
         face, gridX, gridY, image = detect_eyes_and_face(frame)
 
-    except:
+    except Exception as e:
+        print(f"Exception: {e}")
         image = frame
         face = None
+
     image = draw_cross_on_image(image)
     if face is not None:
         face_with_grid = np.concatenate([(convert_and_resize_image(face, input_shape_tinytracker[1:3], gray=False).astype('int32')).astype('int8'), gridX, gridY], axis=-1)
